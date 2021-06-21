@@ -70,7 +70,7 @@ QVariant FileTableModel::data(const QModelIndex& index, int role) const
             double totalSize = m_filesData[m_filesData.size() - 1].second;//процентное соотношение
             double percent = double(m_filesData[index.row()].second) / totalSize * 100;
 
-            if(totalSize > 0){//для не пустойдиректории
+            if(totalSize > 0&&percent!=0){//для не пустойдиректории
                 if (percent >= 1 ){
                     return QString::number(percent, 'f', 2);
                 }
