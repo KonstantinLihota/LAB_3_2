@@ -9,22 +9,22 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    MainWindow_FileBrowser.cpp \
     byfile.cpp \
     bytype.cpp \
     filestrateg.cpp \
-    main.cpp \
-    mainwindow.cpp \
-    mainwindow_filebrowser.cpp
+    filetablemodel.cpp \
+    main.cpp
 
 HEADERS += \
+    MainWindow_FileBrowser.h \
     byfile.h \
     bytype.h \
     filestrateg.h \
-    mainwindow.h \
-    mainwindow_filebrowser.h
+    filetablemodel.h
 
 FORMS += \
-    mainwindow.ui
+    MainWindow_FileBrowse.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
