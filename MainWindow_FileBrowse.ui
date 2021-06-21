@@ -34,12 +34,12 @@
      <widget class="QComboBox" name="StratComBox">
       <item>
        <property name="text">
-        <string>type</string>
+        <string>file</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>file</string>
+        <string>type</string>
        </property>
       </item>
      </widget>
