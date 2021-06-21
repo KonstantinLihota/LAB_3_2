@@ -18,7 +18,7 @@
 ![image](https://user-images.githubusercontent.com/64350198/122753898-1b15d680-d2bd-11eb-953d-b010e9b6f3ea.png)
 
 проверка, если папка содержит пустые папки(test)
-![image](https://user-images.githubusercontent.com/64350198/122754203-8b245c80-d2bd-11eb-9288-e10dbee98989.png)
+![image](https://user-images.githubusercontent.com/64350198/122754478-ed7d5d00-d2bd-11eb-9ae4-ef76e4b8d415.png)
 
 проверка, если папка пустая
 ![image](https://user-images.githubusercontent.com/64350198/122754239-97a8b500-d2bd-11eb-8c60-4769a459e6ee.png)
