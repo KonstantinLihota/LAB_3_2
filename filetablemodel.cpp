@@ -65,9 +65,11 @@ QVariant FileTableModel::data(const QModelIndex& index, int role) const
             return QLocale(QLocale::English).formattedDataSize(m_filesData[index.row()].second);//возращает размер
 
         case 2://для 3 столбца
+            double totalSize =0;
+            for (int i=0;i<m_filesData.size();i++){
+                totalSize+= m_filesData[i].second;
+            }
 
-
-            double totalSize = m_filesData[m_filesData.size() - 1].second;//процентное соотношение
             double percent = double(m_filesData[index.row()].second) / totalSize * 100;
 
             if(totalSize > 0&&percent!=0){//для не пустойдиректории

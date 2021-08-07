@@ -52,6 +52,6 @@ QVector<QPair<QString, uint64_t>> ByType::calculate(QString const& path)
     }
 
 
-    result_file.append(qMakePair(QString("All size"), allSize));//добавляем размер папки
+
     return result_file;
 }
