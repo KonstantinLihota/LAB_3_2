@@ -50,6 +50,9 @@ QVector<QPair<QString, uint64_t>> ByType::calculate(QString const& path)
             result_file.append(qMakePair(file.suffix(), file.size()));
         }
     }
+    else{
+        result_file.append(qMakePair(QString("Current directory"), 0));
+    }
 
 
 

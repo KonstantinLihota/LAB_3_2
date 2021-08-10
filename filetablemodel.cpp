@@ -10,7 +10,20 @@ FileTableModel::FileTableModel(QObject* init , QVector<QPair<QString, uint64_t>>
 
 void FileTableModel::SetData(QVector<QPair<QString, uint64_t>> const& Data)
 {
+    if(!m_filesData.empty())
+    {
+        beginRemoveRows(QModelIndex(), 0, m_filesData.size() - 1);
+        m_filesData.clear();
+        endRemoveRows();
+    }
+
     m_filesData = Data;
+
+    if(!Data.empty())
+    {
+        beginInsertRows(QModelIndex(), 0, Data.size() - 1);
+        endInsertRows();
+    }
 }
 
 QVector<QPair<QString, uint64_t>>const& FileTableModel::getData()

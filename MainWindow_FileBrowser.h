@@ -4,7 +4,7 @@
 #include <filetablemodel.h>
 #include <QItemSelection>
 #include "filestrateg.h"
-
+#include"observer.h"
 namespace Ui
 {
     class MainWindow_FileBrowser;
@@ -34,7 +34,7 @@ public slots:
     void setStrategy(qint32 const& index);
     //слот изменения папки
     void folderChanged(const QItemSelection& selected, const QItemSelection& deselected);
-
+    void updateView(int index);
 private:
 
 
@@ -42,8 +42,9 @@ private:
 
     FileStrateg* m_strategy;//выбраная стратегия
 
-    FileTableModel* m_tableModel;//указатель на модель отоброженную таблицу
+    //FileTableModel* m_tableModel;//указатель на модель отоброженную таблицу
 
+    FilesObserver m_observer;
     QString m_Path;//текущий путь до выбранного файла
 
     Ui::MainWindow_FileBrowser* ui;//пользовательский интерфейс

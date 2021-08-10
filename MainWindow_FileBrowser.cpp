@@ -7,8 +7,8 @@
 MainWindow_FileBrowser::MainWindow_FileBrowser(QWidget* parent, MainWindow_FileBrowser::Strategy strat_type) :
     QWidget(parent),
     ui(new Ui::MainWindow_FileBrowser),
-    m_fileSystem(new QFileSystemModel(this)),
-    m_tableModel(new  FileTableModel(this))
+    m_fileSystem(new QFileSystemModel(this))
+   // m_tableModel(new  FileTableModel(this))
 {
 
     ui->setupUi(this);
@@ -19,10 +19,16 @@ MainWindow_FileBrowser::MainWindow_FileBrowser(QWidget* parent, MainWindow_FileB
 
     ui->treeView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);//устанавливаем ратяжение колонок по размеру содержимого
 
-    ui->tableView->setModel(m_tableModel);//устанавливаем модель
+    //ui->tableView->setModel(m_tableModel);//устанавливаем модель
 
+    //ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    FileTableModel* model = new FileTableModel(this);
+    ui->tableView->setModel(model);
     ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-
+    //подписываем на оповещения
+    m_observer.subscribe(new TableAdapter(model));
+    m_observer.subscribe(new BarChartAdapter(ui->chartView));
+    m_observer.subscribe(new PieChartAdapter(ui->chartView));
 
     if (strat_type == Strategy::File)//устанавливаем стратегию
         m_strategy = new ByFile;
@@ -35,22 +41,36 @@ MainWindow_FileBrowser::MainWindow_FileBrowser(QWidget* parent, MainWindow_FileB
 
     connect(ui->treeView->selectionModel(), &QItemSelectionModel::selectionChanged,
             this, &MainWindow_FileBrowser::folderChanged);
+    connect(ui->displayComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
+            this, &MainWindow_FileBrowser::updateView);
 }
 
 MainWindow_FileBrowser::~MainWindow_FileBrowser()
 {
     delete ui;
-}
+    delete m_strategy;
 
+    for(int i = 0; i < m_observer.count(); ++i)
+        delete m_observer.getByIndex(i);
+}
+void MainWindow_FileBrowser::updateView(int index)
+{
+    //обновляем контретного подписчки, потому что если выбрана диаграмма для отображения данных
+    //то оповещение всех диаграмм приведет к тому, что каждая диаграмма будет
+    //перекрывать предыдущую и в итоге отобразиться та диаграмма, которая была оповещена последней
+    m_observer.updateByIndex(m_strategy->calculate(m_Path), index);
+    ui->stackedWidget->setCurrentIndex(index == 0 ? 0 : 1);
+}
 void MainWindow_FileBrowser::folderChanged(const QItemSelection& selected, const QItemSelection& /*deselected*/)
 {
 
     m_Path = m_fileSystem->filePath(selected.indexes()[0]);//меняем путь на путь до выбраной папки
 
 
-    m_tableModel->SetData(m_strategy->calculate(m_Path));//обновление данных
 
-    emit m_tableModel->layoutChanged();
+
+    auto data = m_strategy->calculate(m_Path);
+    m_observer.updateByIndex(data, ui->displayComboBox->currentIndex());
 }
 
 void MainWindow_FileBrowser:: setStrategy(qint32 const& index)//метод для устанавки стратегии
@@ -70,7 +90,11 @@ void MainWindow_FileBrowser:: setStrategy(qint32 const& index)//метод дл�
 
 
 
-     m_tableModel->SetData( m_strategy->calculate(m_Path)); //обновляем данные модели
+    //если папка не выбрана, то выходим
+    if (m_Path.isEmpty())
+        return;
 
-    emit m_tableModel->layoutChanged();
+    //обновляем данные модели
+    auto data = m_strategy->calculate(m_Path);
+    m_observer.updateByIndex(data, ui->displayComboBox->currentIndex());
 }

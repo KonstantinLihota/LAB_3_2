@@ -4,6 +4,8 @@
 #include<qstring.h>
 #include"filestrateg.h"
 #include<QDir>
+//#include <QtCharts>
+
 #include<QDirIterator>
 
 class ByFile: public  FileStrateg// конкретная стратегия по папкам

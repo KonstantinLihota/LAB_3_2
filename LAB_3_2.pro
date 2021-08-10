@@ -1,5 +1,5 @@
 QT       += core gui
-
+QT += charts
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
@@ -10,21 +10,26 @@ CONFIG += c++11
 
 SOURCES += \
     MainWindow_FileBrowser.cpp \
+    adapter.cpp \
     byfile.cpp \
     bytype.cpp \
     filestrateg.cpp \
     filetablemodel.cpp \
-    main.cpp
+    main.cpp \
+    observer.cpp
 
 HEADERS += \
     MainWindow_FileBrowser.h \
+    adapter.h \
     byfile.h \
     bytype.h \
     filestrateg.h \
-    filetablemodel.h
+    filetablemodel.h \
+    observer.h
 
 FORMS += \
     MainWindow_FileBrowse.ui
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
