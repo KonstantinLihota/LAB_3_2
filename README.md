@@ -11,28 +11,39 @@
 Шаблонный метод мы используем в части с разными видами диаграмм(в классе ChartAdapter) , так как они имеют общие части в алгоритме именения данных, но отличаются в методах  makeSeries (создать серию для данных) и appendToSeries (добавить данные в серию).
 Главным шаблонным методов является updateData в классе ChartAdapter.
 ## Тестирование 
-1
+
 ![image](https://user-images.githubusercontent.com/64350198/128999326-5c563631-a730-46bd-9b44-38d58b00f00d.png)
-2
+
+Отображение на полный экран кореектно 
+
 ![image](https://user-images.githubusercontent.com/64350198/128999361-ddc9789a-a74f-4c94-94ef-63ecda8f8536.png)
-3
+
+Отображение диаграмм для стратегии по папкам
+
 ![image](https://user-images.githubusercontent.com/64350198/128999405-46f22a28-c1a2-4674-af95-2a67478f934b.png)
-4
+
 ![image](https://user-images.githubusercontent.com/64350198/128999462-9bbfee57-fa68-46e6-bd0b-361e853faba7.png)
-5
+
+Отображение диаграмм для стратегии по файлам
+
 ![image](https://user-images.githubusercontent.com/64350198/128999507-2181508f-21a4-4a58-9e49-ec1ea8f753c9.png)
-6
+
 ![image](https://user-images.githubusercontent.com/64350198/128999528-689cf93f-d30f-4aac-af00-f295a6e62d60.png)
-7
+
+Для пустой папки 
+
 ![image](https://user-images.githubusercontent.com/64350198/128999570-4f2d4f8e-23ad-41c0-8d2f-702c50f60184.png)
-8
+
 ![image](https://user-images.githubusercontent.com/64350198/128999601-65c43ffe-c774-49eb-ac5c-5ffa2ba1f366.png)
-9
-![image](https://user-images.githubusercontent.com/64350198/128999628-cf155f93-e986-4c78-bd48-db5be42ea917.png)
-10
+
+![image](https://user-images.githubusercontent.com/64350198/128999628-cf155f93-e986-4c78-bd48-db5be42ea917.png) 
+
+Если выбран файл а не папка
+
 ![image](https://user-images.githubusercontent.com/64350198/128999695-45882cd2-79be-4a2f-b55a-58f53258d0ba.png)
-11
+
 ![image](https://user-images.githubusercontent.com/64350198/128999731-9e4ea838-2410-4554-9e28-9317844e9343.png)
+
 Из тестов можно видеть адекватность работы программы 
 
 ### Постановка задачи
