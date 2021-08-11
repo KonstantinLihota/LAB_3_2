@@ -7,7 +7,7 @@ TableAdapter::TableAdapter(FileTableModel* model) :
 void TableAdapter::updateData(const QVector<QPair<QString, uint64_t>>&data)
 {
 
-   if(m_model)
+   if(m_model)//когда есть указатель на модель передаем в нее данные
    {
       m_model->SetData(data);
    }
@@ -24,7 +24,7 @@ ChartAdapter::~ChartAdapter()
 }
 
 
-void ChartAdapter::updateData(const QVector<QPair<QString, uint64_t>>& data)
+void ChartAdapter::updateData(const QVector<QPair<QString, uint64_t>>& data)//обновление данных в диаграмме
 {
     m_chart->removeAllSeries();
 
@@ -34,28 +34,28 @@ void ChartAdapter::updateData(const QVector<QPair<QString, uint64_t>>& data)
         {
            QAbstractSeries* series = makeSeries();
 
-           float other_percent = 0.0;
+           float other_percent = 0.0;//здесь накапливаем процент файлов которые занимают мало место(меньше 3 процентов)
 
            QString label;
 
            float percent = 0;
 
            float totalSize = 0.;
-           for (int i=0; i<data.size(); i++){
+           for (int i=0; i<data.size(); i++){//вычисляем общую длинну
                 totalSize +=  data[i].second;
            }
            if (totalSize > 0)
            {
-              for (int i = 0;  i < data.size() ; ++i)
+              for (int i = 0;  i < data.size() ; ++i)//вычисляем процент для каждого файла
               {  percent = float(data[i].second) / totalSize * 100;
                  if (percent >3.)
                  {
                     label = data[i].first + " - " + QString::number(percent, 'g', 3) + "%";
-                    appendToSeries(series, label, percent);
+                    appendToSeries(series, label, percent);//добовляем в серию
                  }
                  else
                  {
-                    other_percent+=percent;
+                    other_percent+=percent;//прибовляем к others file
                  }
 
 
@@ -65,11 +65,11 @@ void ChartAdapter::updateData(const QVector<QPair<QString, uint64_t>>& data)
               label = "others - " + QString::number(other_percent, 'g', 3) + "%";
               appendToSeries(series, label, other_percent);
 
-              m_chart->addSeries(series);
-              m_chart->setTheme(QChart::ChartTheme::ChartThemeQt);
-              m_chart->legend()->setAlignment(Qt::AlignRight);
+              m_chart->addSeries(series);//передаем серию
+              m_chart->setTheme(QChart::ChartTheme::ChartThemeLight);//
+              m_chart->legend()->setAlignment(Qt::AlignRight);//устанавливаем легенду справа
            }
-           else{
+           else{//если файл пуст графики отображаются пустыми с пометко 'empty'
                appendToSeries(series, "empty", 0);
                m_chart->addSeries(series);
                m_chart->setTheme(QChart::ChartTheme::ChartThemeQt);

@@ -2,7 +2,13 @@
 
 #include "filetablemodel.h"
 #include <QtCharts>
-
+/*Адаптер — это структурный паттерн проектирования, который позволяет объектам
+ *  с несовместимыми интерфейсами работать вместе.
+ * Наблюдатель — это поведенческий паттерн проектирования, который создаёт механизм подписки,
+ *  позволяющий одним объектам следить и реагировать на события, происходящие в других объектах.
+ *
+ *  В данной задаче мы его используем  в паре с наблюдателем так как  диаграммы не являются частью системы MVC.
+*/
 
 class Adapter
 {
@@ -11,11 +17,11 @@ public:
     virtual ~Adapter() = default;
 
 
-    virtual void updateData(const QVector<QPair<QString, uint64_t>>& data) = 0;
+    virtual void updateData(const QVector<QPair<QString, uint64_t>>& data) = 0;//чисто виртуалный метод отвечающий за обновление данных
 };
 
 
-class TableAdapter : public Adapter
+class TableAdapter : public Adapter //аддаптер для представления в виде таблицы
 {
 public:
 
@@ -30,7 +36,7 @@ private:
 
 
 
-class ChartAdapter : public Adapter
+class ChartAdapter : public Adapter//аддаптер для представления в диаграмм
 {
 public:
 
@@ -38,7 +44,7 @@ public:
    virtual ~ChartAdapter();
 
 
-   void updateData(const QVector<QPair<QString, uint64_t>>& data) override;
+   void updateData(const QVector<QPair<QString, uint64_t>>& data) override;//главный шаблонный метод для обновления графиков
 
 protected:
 
@@ -51,7 +57,7 @@ protected:
 
 
 
-class BarChartAdapter : public ChartAdapter
+class BarChartAdapter : public ChartAdapter//для столбчатой диаграммы
 {
 public:
 
@@ -65,7 +71,7 @@ private:
 
 
 
-class PieChartAdapter : public ChartAdapter
+class PieChartAdapter : public ChartAdapter//для круговой диаграммы
 {
 public:
 
