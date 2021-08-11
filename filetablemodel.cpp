@@ -10,7 +10,20 @@ FileTableModel::FileTableModel(QObject* init , QVector<QPair<QString, uint64_t>>
 
 void FileTableModel::SetData(QVector<QPair<QString, uint64_t>> const& Data)
 {
+    if(!m_filesData.empty())
+    {
+        beginRemoveRows(QModelIndex(), 0, m_filesData.size() - 1);
+        m_filesData.clear();
+        endRemoveRows();
+    }
+
     m_filesData = Data;
+
+    if(!Data.empty())
+    {
+        beginInsertRows(QModelIndex(), 0, Data.size() - 1);
+        endInsertRows();
+    }
 }
 
 QVector<QPair<QString, uint64_t>>const& FileTableModel::getData()
@@ -65,9 +78,11 @@ QVariant FileTableModel::data(const QModelIndex& index, int role) const
             return QLocale(QLocale::English).formattedDataSize(m_filesData[index.row()].second);//возращает размер
 
         case 2://для 3 столбца
+            double totalSize =0;
+            for (int i=0;i<m_filesData.size();i++){
+                totalSize+= m_filesData[i].second;
+            }
 
-
-            double totalSize = m_filesData[m_filesData.size() - 1].second;//процентное соотношение
             double percent = double(m_filesData[index.row()].second) / totalSize * 100;
 
             if(totalSize > 0&&percent!=0){//для не пустойдиректории

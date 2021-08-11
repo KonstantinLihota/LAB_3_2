@@ -14,7 +14,7 @@ QVector<QPair<QString, uint64_t>> ByFile::calculate(QString const& path)// фу�
 
 
     if (allSize > 0)//Если папка не пустая
-    {
+    {allSize =0;
         if (file.isDir())//для папок
         {
 
@@ -26,22 +26,27 @@ QVector<QPair<QString, uint64_t>> ByFile::calculate(QString const& path)// фу�
                             uint64_t size;
                             if (Iter.fileInfo().isDir()){
                            size = GetFileSize( Iter.fileInfo().absoluteFilePath(), filters);//вычисляем размер папки
+                           result_file.append(qMakePair(Iter.fileInfo().fileName(),size)); //добавляем в итоговый вектор
                             }
                             else{
-                                size = Iter.fileInfo().size();//если это не папка вычисляем размер файла
+
+                                allSize+= Iter.fileInfo().size();//если это не папка вычисляем размер файла
+
                             }
 
-                           result_file.append(qMakePair(Iter.fileInfo().fileName(),size)); //добавляем в итоговый вектор
+
                        }
         }
         else//для файлов
         {
-            result_file.append(qMakePair(file.fileName(), (uint64_t)file.size()));
+           result_file.append(qMakePair(file.fileName(), (uint64_t)file.size()));
+
+
         }
     }
 
 
-    result_file.append(qMakePair(QString("All size"), allSize));
+    result_file.append(qMakePair(QString("Current directory"), allSize));
     return result_file;
 }
 
